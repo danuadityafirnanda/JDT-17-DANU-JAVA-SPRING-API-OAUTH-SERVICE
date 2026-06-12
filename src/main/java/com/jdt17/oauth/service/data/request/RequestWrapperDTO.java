@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestWrapperDTO<T> {
     private T request;
+    private String requestUsersId;
     private String requestRemoteIp;
     private String requestTimeZone;
     private String requestDeviceFingerprint;

@@ -2,12 +2,12 @@ package com.jdt17.oauth.service.controller.module.module;
 
 
 import com.jdt17.oauth.service.components.runtime.exception.CoreThrowHandler;
-import com.jdt17.oauth.service.data.request.OauthLoginRequest;
+import com.jdt17.oauth.service.data.request.OauthRegisterRequest;
 import com.jdt17.oauth.service.data.request.RequestWrapperDTO;
 import com.jdt17.oauth.service.data.response.RestApiPath;
 import com.jdt17.oauth.service.data.response.RestApiResponse;
-import com.jdt17.oauth.service.data.response.module.OauthLoginResponse;
-import com.jdt17.oauth.service.service.module.LoginInterface;
+import com.jdt17.oauth.service.data.response.module.OauthRegisterResponse;
+import com.jdt17.oauth.service.service.module.RegisterInterface;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,28 +19,13 @@ import static com.jdt17.oauth.service.data.utility.OauthVariable.*;
 @RequiredArgsConstructor
 @RequestMapping(RestApiPath.BASE_PATH + RestApiPath.OAUTH_BASE_PATH)
 @Slf4j
-public class LoginController {
+public class RegisterController {
 
-    private final LoginInterface loginInterface;
+    private final RegisterInterface registerInterface;
 
-    /**
-     * Handles user login request.
-     * <p>
-     * This endpoint authenticates a user using their username and password.
-     * It also supports additional headers for IP, timezone, user agent, and device fingerprint for logging and tracking.
-     * </p>
-     *
-     * @param oauthLoginRequest The login request containing user credentials.
-     * @param remoteIP The IP address of the client making the request.
-     * @param remoteTimeZone The timezone of the client making the request.
-     * @param userAgent The user agent of the client making the request.
-     * @param deviceFingerprint The fingerprint of the client's device.
-     * @return The OAuth login result wrapped in a RestApiResponse.
-     * @throws CoreThrowHandler If there is an error during the login process.
-     */
-    @PostMapping(RestApiPath.OAUTH_LOGIN_PATH)
-    public RestApiResponse<OauthLoginResponse> getUserLogin(
-            @Valid @RequestBody OauthLoginRequest oauthLoginRequest,
+    @PostMapping(RestApiPath.OAUTH_REGISTER_PATH)
+    public RestApiResponse<OauthRegisterResponse> registerUser(
+            @Valid @RequestBody OauthRegisterRequest oauthRegisterRequest,
             @RequestHeader(value = HEADER_NAME_USER_IP, required = false) String remoteIP,
             @RequestHeader(value = HEADER_NAME_USER_TIMEZONE, required = false) String remoteTimeZone,
             @RequestHeader(value = HEADER_NAME_FCM_TOKEN, required = false) String fcmToken,
@@ -50,8 +35,9 @@ public class LoginController {
             @RequestHeader(value = HEADER_NAME_USER_AGENT, required = false) String userAgent,
             @RequestHeader(value = HEADER_NAME_USER_FINGERPRINT, required = false) String deviceFingerprint
     ) throws CoreThrowHandler {
-        RequestWrapperDTO<OauthLoginRequest> requestWrapperDTO = new RequestWrapperDTO<>(
-                oauthLoginRequest,
+
+        RequestWrapperDTO<OauthRegisterRequest> requestWrapperDTO = new RequestWrapperDTO<>(
+                oauthRegisterRequest,
                 null,
                 remoteIP,
                 remoteTimeZone,
@@ -63,6 +49,6 @@ public class LoginController {
                 devicePlatform
         );
 
-        return loginInterface.login(requestWrapperDTO);
+        return registerInterface.register(requestWrapperDTO);
     }
 }

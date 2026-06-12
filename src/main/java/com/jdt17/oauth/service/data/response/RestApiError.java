@@ -15,7 +15,9 @@ import java.util.Locale;
 @Slf4j
 public enum RestApiError {
 
-    ACCOUNT_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), "error.http.account_not_found"),
+    ACCOUNT_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "error.http.account_not_found"),
+    EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST.value(), "error.http.email_already_exists"),
+    ACCOUNT_NOT_VALID_USERNAME(HttpStatus.BAD_REQUEST.value(), "error.account_not_valid_username"),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "error.http.account_not_found"),
     X_API_ACCESS_KEY(HttpStatus.UNAUTHORIZED.value(), "error.http.api_key_not_found"),
     X_AUTH_ACCESS_KEY(HttpStatus.UNAUTHORIZED.value(), "error.http.authorization_not_valid"),
